@@ -1,0 +1,2280 @@
+{
+  "address": "85DsSom7cr5hHVZeTB7k3WKKKpFMB2DLUN3c6FbR9861",
+  "metadata": {
+    "name": "concord",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Concord private meeting and vote program (Phase 1 MagicBlock vertical proof)"
+  },
+  "instructions": [
+    {
+      "name": "add_voter_slots",
+      "docs": [
+        "Host creates ephemeral voter slots (sponsored by the session). Remaining",
+        "accounts: `[slot, slot_permission]` per voter, in `voters` order. Idempotent."
+      ],
+      "discriminator": [
+        143,
+        93,
+        117,
+        81,
+        226,
+        183,
+        13,
+        26
+      ],
+      "accounts": [
+        {
+          "name": "host",
+          "signer": true,
+          "relations": [
+            "session"
+          ]
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "address": "MagicVau1t999999999999999999999999999999999"
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111"
+        },
+        {
+          "name": "permission_program",
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1"
+        }
+      ],
+      "args": [
+        {
+          "name": "voters",
+          "type": {
+            "vec": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "cast_vote",
+      "docs": [
+        "Eligible voter writes their choice to their own private slot. The voter only",
+        "signs; any wallet (including one with 0 SOL) can be the fee payer on PER."
+      ],
+      "discriminator": [
+        20,
+        212,
+        15,
+        189,
+        69,
+        180,
+        69,
+        151
+      ],
+      "accounts": [
+        {
+          "name": "voter",
+          "docs": [
+            "Signs as authority only; need not hold SOL or pay the fee."
+          ],
+          "signer": true
+        },
+        {
+          "name": "session",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        },
+        {
+          "name": "slot",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "option",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "close_room_pda",
+      "docs": [
+        "Host reclaims rent for the session or results PDA and its permission after the",
+        "receipt is final. The registry (the public receipt) is kept."
+      ],
+      "discriminator": [
+        117,
+        179,
+        156,
+        53,
+        17,
+        157,
+        122,
+        218
+      ],
+      "accounts": [
+        {
+          "name": "host",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "registry"
+        },
+        {
+          "name": "pda",
+          "writable": true
+        },
+        {
+          "name": "permission",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  114,
+                  109,
+                  105,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110,
+                  58
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                136,
+                161,
+                10,
+                196,
+                33,
+                152,
+                1,
+                214,
+                246,
+                106,
+                29,
+                60,
+                6,
+                152,
+                192,
+                102,
+                169,
+                175,
+                212,
+                217,
+                180,
+                252,
+                231,
+                71,
+                151,
+                141,
+                209,
+                5,
+                168,
+                212,
+                103,
+                82
+              ]
+            }
+          }
+        },
+        {
+          "name": "permission_program",
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1"
+        }
+      ],
+      "args": [
+        {
+          "name": "kind",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "close_vote",
+      "docs": [
+        "Host closes early; anyone may close once the deadline or meeting limit passes."
+      ],
+      "discriminator": [
+        137,
+        152,
+        87,
+        249,
+        170,
+        239,
+        133,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_voter_slots",
+      "docs": [
+        "After the meeting ends, closes ephemeral slots and their permissions,",
+        "refunding rent to the session. Remaining accounts: `[slot, slot_permission]`."
+      ],
+      "discriminator": [
+        51,
+        56,
+        38,
+        233,
+        122,
+        106,
+        149,
+        25
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "address": "MagicVau1t999999999999999999999999999999999"
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111"
+        },
+        {
+          "name": "permission_program",
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1"
+        }
+      ],
+      "args": [
+        {
+          "name": "voters",
+          "type": {
+            "vec": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "commit_results",
+      "docs": [
+        "Commits the aggregate results to the base layer (keeps them delegated)."
+      ],
+      "discriminator": [
+        149,
+        119,
+        7,
+        235,
+        101,
+        77,
+        163,
+        72
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "results",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  114,
+                  101,
+                  115,
+                  117,
+                  108,
+                  116,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "results.registry",
+                "account": "RoomResults"
+              }
+            ]
+          }
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111"
+        },
+        {
+          "name": "magic_context",
+          "writable": true,
+          "address": "MagicContext1111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "delegate_room_pda",
+      "docs": [
+        "Creates the permission (member: host), delegates it, then delegates the",
+        "session or results PDA to the validator (the TEE identity for PER)."
+      ],
+      "discriminator": [
+        28,
+        131,
+        197,
+        128,
+        241,
+        225,
+        164,
+        86
+      ],
+      "accounts": [
+        {
+          "name": "host",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "registry"
+        },
+        {
+          "name": "buffer_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  102,
+                  102,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                105,
+                22,
+                174,
+                255,
+                66,
+                171,
+                24,
+                242,
+                227,
+                50,
+                112,
+                123,
+                255,
+                171,
+                242,
+                86,
+                223,
+                119,
+                219,
+                113,
+                100,
+                144,
+                252,
+                234,
+                244,
+                255,
+                239,
+                29,
+                255,
+                18,
+                134,
+                30
+              ]
+            }
+          }
+        },
+        {
+          "name": "delegation_record_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "delegation_metadata_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110,
+                  45,
+                  109,
+                  101,
+                  116,
+                  97,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "pda",
+          "writable": true
+        },
+        {
+          "name": "permission",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  114,
+                  109,
+                  105,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110,
+                  58
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                136,
+                161,
+                10,
+                196,
+                33,
+                152,
+                1,
+                214,
+                246,
+                106,
+                29,
+                60,
+                6,
+                152,
+                192,
+                102,
+                169,
+                175,
+                212,
+                217,
+                180,
+                252,
+                231,
+                71,
+                151,
+                141,
+                209,
+                5,
+                168,
+                212,
+                103,
+                82
+              ]
+            }
+          }
+        },
+        {
+          "name": "buffer_permission",
+          "writable": true
+        },
+        {
+          "name": "delegation_record_permission",
+          "writable": true
+        },
+        {
+          "name": "delegation_metadata_permission",
+          "writable": true
+        },
+        {
+          "name": "permission_program",
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1"
+        },
+        {
+          "name": "validator",
+          "optional": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "owner_program",
+          "address": "85DsSom7cr5hHVZeTB7k3WKKKpFMB2DLUN3c6FbR9861"
+        },
+        {
+          "name": "delegation_program",
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh"
+        }
+      ],
+      "args": [
+        {
+          "name": "kind",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "end_meeting",
+      "docs": [
+        "Host ends early; anyone may end once 60 minutes have passed. An active vote",
+        "must be finalized first."
+      ],
+      "discriminator": [
+        87,
+        75,
+        99,
+        125,
+        38,
+        200,
+        157,
+        216
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "finalize_receipt",
+      "docs": [
+        "Host finalizes the public receipt after undelegation. Every summary digest is",
+        "recomputed from its fields; times come from program state, not the caller."
+      ],
+      "discriminator": [
+        41,
+        43,
+        175,
+        190,
+        232,
+        64,
+        155,
+        172
+      ],
+      "accounts": [
+        {
+          "name": "host",
+          "signer": true
+        },
+        {
+          "name": "registry",
+          "writable": true
+        },
+        {
+          "name": "session",
+          "docs": [
+            "Owner check (Anchor) proves the session is undelegated."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "registry"
+              }
+            ]
+          }
+        },
+        {
+          "name": "results",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  114,
+                  101,
+                  115,
+                  117,
+                  108,
+                  116,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "registry"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "action_items_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "finalize_vote",
+      "docs": [
+        "Permissionless. Tallies every eligible slot (remaining accounts, exact",
+        "eligible order) inside PER, writes an aggregate-only summary, resets the slots."
+      ],
+      "discriminator": [
+        181,
+        176,
+        6,
+        248,
+        249,
+        134,
+        146,
+        56
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        },
+        {
+          "name": "results",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  114,
+                  101,
+                  115,
+                  117,
+                  108,
+                  116,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "init_room_state",
+      "docs": [
+        "Creates the session (funded with `sponsor_budget` lamports for ephemeral slot",
+        "rent) and the results account. Requires fulfilled VRF."
+      ],
+      "discriminator": [
+        186,
+        224,
+        254,
+        105,
+        162,
+        128,
+        156,
+        190
+      ],
+      "accounts": [
+        {
+          "name": "host",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "registry"
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "registry"
+              }
+            ]
+          }
+        },
+        {
+          "name": "results",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  114,
+                  101,
+                  115,
+                  117,
+                  108,
+                  116,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "registry"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "sponsor_budget",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_room",
+      "docs": [
+        "Host creates the public registry. `room_nonce` is the 16-byte meeting id,",
+        "so one host can run any number of meetings."
+      ],
+      "discriminator": [
+        216,
+        42,
+        137,
+        161,
+        61,
+        72,
+        154,
+        238
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  114,
+                  111,
+                  111,
+                  109
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "room_nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "room_nonce",
+          "type": {
+            "array": [
+              "u8",
+              16
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "open_vote",
+      "docs": [
+        "Host opens a vote and freezes the eligibility snapshot. Remaining accounts:",
+        "the voter slot of every eligible wallet (any order). The eligible list is read",
+        "from the slots themselves, so 20 voters fit in one transaction."
+      ],
+      "discriminator": [
+        133,
+        238,
+        51,
+        215,
+        163,
+        13,
+        5,
+        110
+      ],
+      "accounts": [
+        {
+          "name": "host",
+          "signer": true,
+          "relations": [
+            "session"
+          ]
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "question_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "option_hashes",
+          "type": {
+            "array": [
+              {
+                "array": [
+                  "u8",
+                  32
+                ]
+              },
+              3
+            ]
+          }
+        },
+        {
+          "name": "deadline",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "process_undelegation",
+      "discriminator": [
+        196,
+        28,
+        41,
+        206,
+        48,
+        37,
+        51,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "base_account",
+          "writable": true
+        },
+        {
+          "name": "buffer",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  110,
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  101,
+                  45,
+                  98,
+                  117,
+                  102,
+                  102,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_account"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                181,
+                183,
+                0,
+                225,
+                242,
+                87,
+                58,
+                192,
+                204,
+                6,
+                34,
+                1,
+                52,
+                74,
+                207,
+                151,
+                184,
+                53,
+                6,
+                235,
+                140,
+                229,
+                25,
+                152,
+                204,
+                98,
+                126,
+                24,
+                147,
+                128,
+                167,
+                62
+              ]
+            }
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "account_seeds",
+          "type": {
+            "vec": "bytes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "request_room_randomness",
+      "docs": [
+        "Host requests verifiable randomness on the base layer (before any delegation)."
+      ],
+      "discriminator": [
+        172,
+        193,
+        63,
+        9,
+        129,
+        136,
+        122,
+        228
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "registry"
+          ]
+        },
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  114,
+                  111,
+                  111,
+                  109
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "account",
+                "path": "registry.room_nonce",
+                "account": "RoomRegistry"
+              }
+            ]
+          }
+        },
+        {
+          "name": "oracle_queue",
+          "writable": true
+        },
+        {
+          "name": "program_identity",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  100,
+                  101,
+                  110,
+                  116,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vrf_program",
+          "address": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz"
+        },
+        {
+          "name": "slot_hashes",
+          "address": "SysvarS1otHashes111111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "start_meeting",
+      "docs": [
+        "Host starts the meeting; the 60-minute clock starts now (program time)."
+      ],
+      "discriminator": [
+        229,
+        57,
+        176,
+        4,
+        108,
+        124,
+        61,
+        62
+      ],
+      "accounts": [
+        {
+          "name": "host",
+          "signer": true,
+          "relations": [
+            "session"
+          ]
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "store_room_randomness",
+      "docs": [
+        "VRF callback. `#[vrf_callback]` checks the VRF program identity signer, so no",
+        "caller can supply its own \"randomness\"."
+      ],
+      "discriminator": [
+        186,
+        72,
+        237,
+        166,
+        224,
+        182,
+        39,
+        143
+      ],
+      "accounts": [
+        {
+          "name": "vrf_program_identity",
+          "docs": [
+            "Scoped VRF identity PDA, bound to this program. Its presence as a signer proves",
+            "the callback was issued by the VRF program for this program."
+          ],
+          "signer": true
+        },
+        {
+          "name": "registry",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "randomness",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "undelegate_room",
+      "docs": [
+        "Commits and undelegates the session and results (and their permissions) back",
+        "to the base layer. Requires an ended meeting with every slot closed, so no",
+        "roster or ballot data is ever committed. Host only: the Magic program needs a",
+        "signing permission member as the commit authority (Devnet-verified), and the",
+        "next step (the receipt) is host-only anyway. Ending and finalizing stay",
+        "permissionless, so an absent host cannot block vote outcomes."
+      ],
+      "discriminator": [
+        151,
+        179,
+        196,
+        11,
+        39,
+        232,
+        174,
+        131
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        },
+        {
+          "name": "results",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  99,
+                  111,
+                  114,
+                  100,
+                  95,
+                  114,
+                  101,
+                  115,
+                  117,
+                  108,
+                  116,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session.registry",
+                "account": "RoomSession"
+              }
+            ]
+          }
+        },
+        {
+          "name": "session_permission",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  114,
+                  109,
+                  105,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110,
+                  58
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "session"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                136,
+                161,
+                10,
+                196,
+                33,
+                152,
+                1,
+                214,
+                246,
+                106,
+                29,
+                60,
+                6,
+                152,
+                192,
+                102,
+                169,
+                175,
+                212,
+                217,
+                180,
+                252,
+                231,
+                71,
+                151,
+                141,
+                209,
+                5,
+                168,
+                212,
+                103,
+                82
+              ]
+            }
+          }
+        },
+        {
+          "name": "results_permission",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  101,
+                  114,
+                  109,
+                  105,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110,
+                  58
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "results"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                136,
+                161,
+                10,
+                196,
+                33,
+                152,
+                1,
+                214,
+                246,
+                106,
+                29,
+                60,
+                6,
+                152,
+                192,
+                102,
+                169,
+                175,
+                212,
+                217,
+                180,
+                252,
+                231,
+                71,
+                151,
+                141,
+                209,
+                5,
+                168,
+                212,
+                103,
+                82
+              ]
+            }
+          }
+        },
+        {
+          "name": "permission_program",
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1"
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111"
+        },
+        {
+          "name": "magic_context",
+          "writable": true,
+          "address": "MagicContext1111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "RoomRegistry",
+      "discriminator": [
+        121,
+        97,
+        220,
+        205,
+        166,
+        93,
+        35,
+        177
+      ]
+    },
+    {
+      "name": "RoomResults",
+      "discriminator": [
+        238,
+        123,
+        245,
+        232,
+        46,
+        80,
+        102,
+        137
+      ]
+    },
+    {
+      "name": "RoomSession",
+      "discriminator": [
+        95,
+        196,
+        110,
+        218,
+        229,
+        142,
+        5,
+        172
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Only the meeting host can do this"
+    },
+    {
+      "code": 6001,
+      "name": "RandomnessPending",
+      "msg": "Verifiable randomness has not been fulfilled yet"
+    },
+    {
+      "code": 6002,
+      "name": "RandomnessAlreadyFulfilled",
+      "msg": "Verifiable randomness was already fulfilled"
+    },
+    {
+      "code": 6003,
+      "name": "AlreadyStarted",
+      "msg": "Meeting already started"
+    },
+    {
+      "code": 6004,
+      "name": "NotStarted",
+      "msg": "Meeting has not started"
+    },
+    {
+      "code": 6005,
+      "name": "MeetingNotActive",
+      "msg": "Meeting has ended or passed its 60-minute limit"
+    },
+    {
+      "code": 6006,
+      "name": "MeetingNotEnded",
+      "msg": "Meeting has not ended"
+    },
+    {
+      "code": 6007,
+      "name": "VoteAlreadyActive",
+      "msg": "Another vote is already active"
+    },
+    {
+      "code": 6008,
+      "name": "VoteNotOpen",
+      "msg": "No vote is open"
+    },
+    {
+      "code": 6009,
+      "name": "VoteNotClosable",
+      "msg": "Vote cannot be finalized yet"
+    },
+    {
+      "code": 6010,
+      "name": "VoteDeadlinePassed",
+      "msg": "The vote deadline has passed"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidOption",
+      "msg": "Option must be 0, 1 or 2"
+    },
+    {
+      "code": 6012,
+      "name": "NotEligible",
+      "msg": "Wallet is not eligible for this vote"
+    },
+    {
+      "code": 6013,
+      "name": "AlreadyVoted",
+      "msg": "This wallet already voted in this round"
+    },
+    {
+      "code": 6014,
+      "name": "NoEligibleVoters",
+      "msg": "At least one eligible voter is required"
+    },
+    {
+      "code": 6015,
+      "name": "TooManyEligibleVoters",
+      "msg": "At most 20 eligible voters"
+    },
+    {
+      "code": 6016,
+      "name": "DuplicateEligibleVoter",
+      "msg": "Eligible voter listed twice"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidLabel",
+      "msg": "Question and options must be non-empty"
+    },
+    {
+      "code": 6018,
+      "name": "DuplicateOption",
+      "msg": "The three options must be different"
+    },
+    {
+      "code": 6019,
+      "name": "InvalidDeadline",
+      "msg": "Deadline must be in the future and within the meeting"
+    },
+    {
+      "code": 6020,
+      "name": "TooManyVotes",
+      "msg": "Maximum number of votes for this meeting reached"
+    },
+    {
+      "code": 6021,
+      "name": "BadSlot",
+      "msg": "Not a valid voter slot"
+    },
+    {
+      "code": 6022,
+      "name": "NotSlotOwner",
+      "msg": "Voter slot does not belong to this voter"
+    },
+    {
+      "code": 6023,
+      "name": "SlotSetMismatch",
+      "msg": "Slot accounts must match the eligible list exactly and in order"
+    },
+    {
+      "code": 6024,
+      "name": "SlotsStillOpen",
+      "msg": "Every voter slot must be closed first"
+    },
+    {
+      "code": 6025,
+      "name": "ReceiptAlreadyFinalized",
+      "msg": "Receipt already finalized"
+    },
+    {
+      "code": 6026,
+      "name": "ReceiptNotFinalized",
+      "msg": "Receipt not finalized"
+    },
+    {
+      "code": 6027,
+      "name": "StillDelegated",
+      "msg": "Room accounts are still delegated"
+    },
+    {
+      "code": 6028,
+      "name": "TooManyParticipants",
+      "msg": "Too many participants"
+    }
+  ],
+  "types": [
+    {
+      "name": "ActiveVote",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vote_id",
+            "type": "u8"
+          },
+          {
+            "name": "status",
+            "type": "u8"
+          },
+          {
+            "name": "question_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "option_hashes",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                3
+              ]
+            }
+          },
+          {
+            "name": "opened_at",
+            "type": "i64"
+          },
+          {
+            "name": "deadline",
+            "type": "i64"
+          },
+          {
+            "name": "closed_at",
+            "type": "i64"
+          },
+          {
+            "name": "eligible",
+            "docs": [
+              "Frozen, sorted eligibility snapshot. Cleared before the session is committed."
+            ],
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "eligibility_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PublicVoteSummary",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vote_id",
+            "type": "u8"
+          },
+          {
+            "name": "question_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "option_hashes",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                3
+              ]
+            }
+          },
+          {
+            "name": "counts",
+            "type": {
+              "array": [
+                "u32",
+                3
+              ]
+            }
+          },
+          {
+            "name": "eligible_count",
+            "type": "u32"
+          },
+          {
+            "name": "submitted_count",
+            "type": "u32"
+          },
+          {
+            "name": "outcome",
+            "type": "u8"
+          },
+          {
+            "name": "closed_at",
+            "type": "i64"
+          },
+          {
+            "name": "eligibility_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "summary_digest",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RoomRegistry",
+      "docs": [
+        "Public base-layer registry. Never delegated. Holds only non-sensitive data:",
+        "creator, VRF output, and the final receipt commitment (spec 9.2-A)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "room_nonce",
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "vrf_output",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "vrf_fulfilled",
+            "type": "bool"
+          },
+          {
+            "name": "started_at",
+            "type": "i64"
+          },
+          {
+            "name": "ended_at",
+            "type": "i64"
+          },
+          {
+            "name": "vote_count",
+            "type": "u8"
+          },
+          {
+            "name": "action_items_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "receipt_digest",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "receipt_finalized",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RoomResults",
+      "docs": [
+        "Aggregate-only results, delegated alongside the session and committed to the",
+        "base layer after each finalized vote. Contains no ballot or voter data."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "registry",
+            "type": "pubkey"
+          },
+          {
+            "name": "summaries",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "PublicVoteSummary"
+                }
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RoomSession",
+      "docs": [
+        "Private room lifecycle, delegated to the TEE PER with a permission whose only",
+        "member is the host. Also the rent sponsor for ephemeral voter slots."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "registry",
+            "type": "pubkey"
+          },
+          {
+            "name": "host",
+            "type": "pubkey"
+          },
+          {
+            "name": "started_at",
+            "type": "i64"
+          },
+          {
+            "name": "ended_at",
+            "type": "i64"
+          },
+          {
+            "name": "next_vote_id",
+            "type": "u8"
+          },
+          {
+            "name": "open_slots",
+            "docs": [
+              "Ephemeral voter slots currently open (must reach 0 before undelegation)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "vote",
+            "type": {
+              "defined": {
+                "name": "ActiveVote"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

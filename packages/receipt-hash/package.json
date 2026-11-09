@@ -1,0 +1,10 @@
+{
+  "name": "@concord/receipt-hash",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser-verifiable receipt digest (spec section 9.5) with cross-language test vectors.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

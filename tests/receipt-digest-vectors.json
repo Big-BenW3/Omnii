@@ -1,0 +1,108 @@
+{
+  "voteSummary": [
+    {
+      "name": "minimal-win",
+      "roomId": "1111111111111111111111111111111111111111111111111111111111111111",
+      "voteId": 1,
+      "questionHash": "2121212121212121212121212121212121212121212121212121212121212121",
+      "optionHashes": [
+        "3131313131313131313131313131313131313131313131313131313131313131",
+        "3232323232323232323232323232323232323232323232323232323232323232",
+        "3333333333333333333333333333333333333333333333333333333333333333"
+      ],
+      "counts": [
+        3,
+        1,
+        0
+      ],
+      "eligibleCount": 4,
+      "submittedCount": 4,
+      "outcome": 0,
+      "closeTimestamp": 1760000000,
+      "eligibilitySnapshotHash": "4141414141414141414141414141414141414141414141414141414141414141",
+      "expectedSummaryDigest": "899f55fade72dad28219fa92fab3433a2b9d55fc37f59f3b8165b6081865463b"
+    },
+    {
+      "name": "tie-negative-close",
+      "roomId": "a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+      "voteId": 8589934592,
+      "questionHash": "b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1",
+      "optionHashes": [
+        "c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1",
+        "c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2",
+        "c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3"
+      ],
+      "counts": [
+        2,
+        2,
+        1
+      ],
+      "eligibleCount": 5,
+      "submittedCount": 5,
+      "outcome": 3,
+      "closeTimestamp": -100,
+      "eligibilitySnapshotHash": "d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1",
+      "expectedSummaryDigest": "dd7fef70c27d8cbc2fec50508ba11663810516d299599925ca672adec9923dca"
+    },
+    {
+      "name": "no-decision-zero-ballots",
+      "roomId": "e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1",
+      "voteId": 0,
+      "questionHash": "e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2",
+      "optionHashes": [
+        "e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3",
+        "e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4",
+        "e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5"
+      ],
+      "counts": [
+        0,
+        0,
+        0
+      ],
+      "eligibleCount": 10,
+      "submittedCount": 0,
+      "outcome": 4,
+      "closeTimestamp": "9223372036854775807",
+      "eligibilitySnapshotHash": "e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6",
+      "expectedSummaryDigest": "1508b620eccf221a4e9f7788963cbb7d244be70e0826075d07f0a73ac2f4dfb8"
+    }
+  ],
+  "receipts": [
+    {
+      "name": "single-summary-zero-start",
+      "roomId": "1111111111111111111111111111111111111111111111111111111111111111",
+      "vrfResultDigest": "7171717171717171717171717171717171717171717171717171717171717171",
+      "startedAt": 0,
+      "endedAt": 1760000100,
+      "orderedSummaryDigests": [
+        "899f55fade72dad28219fa92fab3433a2b9d55fc37f59f3b8165b6081865463b"
+      ],
+      "actionItemsHash": "5151515151515151515151515151515151515151515151515151515151515151",
+      "expectedReceiptDigest": "cde0e940b6f7e8d4fb1d5d1cd448b1831ae7d81b1e6ff8add4b62a1242957e87"
+    },
+    {
+      "name": "multi-summary-negative-start",
+      "roomId": "a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+      "vrfResultDigest": "7272727272727272727272727272727272727272727272727272727272727272",
+      "startedAt": -50,
+      "endedAt": 100,
+      "orderedSummaryDigests": [
+        "899f55fade72dad28219fa92fab3433a2b9d55fc37f59f3b8165b6081865463b",
+        "dd7fef70c27d8cbc2fec50508ba11663810516d299599925ca672adec9923dca",
+        "1508b620eccf221a4e9f7788963cbb7d244be70e0826075d07f0a73ac2f4dfb8"
+      ],
+      "actionItemsHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expectedReceiptDigest": "9c9c77442bacc5b10e7afc0317c7d96b042126d83218618d99445a21e71ab538"
+    },
+    {
+      "name": "empty-summaries",
+      "roomId": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "vrfResultDigest": "7373737373737373737373737373737373737373737373737373737373737373",
+      "startedAt": 1,
+      "endedAt": 2,
+      "orderedSummaryDigests": [],
+      "actionItemsHash": "fefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefe",
+      "expectedReceiptDigest": "6ebc5d2b18e173be31b4968b14e5ecd05e44475df86719aaa1793b1f4c7f0d82"
+    }
+  ]
+}

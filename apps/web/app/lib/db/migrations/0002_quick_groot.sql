@@ -1,0 +1,2 @@
+CREATE UNIQUE INDEX "meetings_room_registry_address_unique" ON "meetings" USING btree ("room_registry_address");--> statement-breakpoint
+CREATE UNIQUE INDEX "receipt_drafts_meeting_unique" ON "receipt_drafts" USING btree ("meeting_id");

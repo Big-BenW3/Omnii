@@ -1,0 +1,10 @@
+.next
+node_modules
+pnpm-lock.yaml
+apps/web/app/generated
+apps/web/app/lib/db/migrations
+.agents
+agent
+pnpm-workspace.yaml
+target
+CONCORD_PRODUCT_SPEC.md

@@ -1,0 +1,69 @@
+{
+  "name": "concord",
+  "description": "Concord: private meetings, confidential voting, verifiable decision records on Solana",
+  "keywords": [
+    "anchor",
+    "kit",
+    "livekit",
+    "magicblock",
+    "nextjs",
+    "react",
+    "solana-kit",
+    "tailwind",
+    "typescript"
+  ],
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "anchor-build": "anchor build --ignore-keys",
+    "anchor-test": "anchor build --ignore-keys && cargo test",
+    "build": "pnpm --filter @concord/web build",
+    "ci": "pnpm lint && pnpm format:check && pnpm guard:devnet && pnpm build",
+    "codama:js": "codama run js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "dev": "pnpm --filter @concord/web dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "guard:devnet": "node scripts/devnet-guard.mjs",
+    "lint": "eslint .",
+    "setup": "pnpm anchor-build && pnpm codama:js",
+    "start": "pnpm --filter @concord/web start",
+    "test:digest": "cargo test -p concord && node --test tests/receipt-digest.test.mjs",
+    "typecheck": "tsc -p apps/web/tsconfig.json && tsc -p packages/shared-types/tsconfig.json && tsc -p packages/receipt-hash/tsconfig.json && tsc -p tsconfig.tests.json",
+    "vectors:receipt": "node scripts/gen-receipt-vectors.mjs",
+    "test": "pnpm --filter @concord/web test",
+    "test:program": "cargo test -p concord",
+    "test:spike": "tsx tests/devnet/spike.ts",
+    "test:all": "pnpm test:program && pnpm test:program:svm && pnpm test:digest && pnpm test",
+    "test:program:svm": "tsx --test tests/program/concord.test.ts",
+    "test:devnet": "tsx tests/devnet/gates.ts",
+    "e2e": "pnpm build && playwright test --project=fast",
+    "e2e:call": "pnpm build && playwright test --project=fast tests/e2e/call.spec.ts",
+    "e2e:devnet": "pnpm build && playwright test --project=devnet",
+    "check:secrets": "node scripts/check-bundle-secrets.mjs"
+  },
+  "devDependencies": {
+    "@codama/nodes-from-anchor": "1.5.3",
+    "@codama/renderers-js": "1.7.1",
+    "@coral-xyz/anchor": "0.32.1",
+    "@magicblock-labs/ephemeral-rollups-sdk": "0.17.3",
+    "@playwright/test": "1.64.1",
+    "@solana/web3.js": "1.99.0",
+    "@types/node": "20.19.43",
+    "drizzle-kit": "^0.31.4",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.10",
+    "litesvm": "0.4.0",
+    "prettier": "^3.6.2",
+    "tsx": "4.20.6",
+    "tweetnacl": "1.0.3",
+    "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@solana/web3.js": "1.99.0"
+    }
+  }
+}

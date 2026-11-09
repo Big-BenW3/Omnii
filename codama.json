@@ -1,0 +1,11 @@
+{
+  "idl": "./target/idl/concord.json",
+  "scripts": {
+    "js": [
+      {
+        "from": "@codama/renderers-js",
+        "args": ["./apps/web/app/generated/concord"]
+      }
+    ]
+  }
+}

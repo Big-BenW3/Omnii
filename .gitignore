@@ -1,0 +1,66 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies (every workspace package gets its own node_modules under pnpm)
+node_modules/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# anchor build artifacts (Anchor workspace lives at the repo root)
+/.anchor/
+/target/
+
+# solana local validator
+test-ledger/
+
+# devnet test reports
+tests/devnet/out/
+
+# local embedded database
+.data/
+apps/web/.data/
+
+# e2e secrets + output
+tests/e2e/.keys/
+tests/e2e/out/
+
+# local tool binaries (e.g. livekit-server)
+.tools/
+
+# stray debug logs
+*.log

@@ -23,7 +23,9 @@ export async function newActor(browser: Browser, label: string, kp = Keypair.gen
 }
 
 export async function signIn(page: Page) {
-  await page.goto("/");
+  // "/" is pure marketing (no wallet chrome, by design); the app shell's
+  // wallet/sign-in control lives in the header once inside the app, e.g. /dashboard.
+  await page.goto("/dashboard");
   await expect(page.getByTestId("sign-in")).toBeVisible();
   await page.getByTestId("sign-in").click();
   await expect(page.getByTestId("signed-in-as")).toBeVisible();

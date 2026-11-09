@@ -25,7 +25,8 @@ async function openAs(context: BrowserContext, kp: Keypair, label: string): Prom
 }
 
 async function signIn(page: Page) {
-  await page.goto("/");
+  // "/" is pure marketing (no wallet chrome, by design); sign in from the app shell.
+  await page.goto("/dashboard");
   await expect(page.getByTestId("sign-in")).toBeVisible();
   await page.getByTestId("sign-in").click();
   await expect(page.getByTestId("signed-in-as")).toBeVisible();

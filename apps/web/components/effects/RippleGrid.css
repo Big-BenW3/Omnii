@@ -1,0 +1,24 @@
+.ripple-grid-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ripple-grid-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ripple-grid-fallback {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--rg-fallback-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rg-fallback-line) 1px, transparent 1px);
+  background-size: var(--rg-fallback-cell) var(--rg-fallback-cell);
+  -webkit-mask-image: radial-gradient(ellipse at 60% 40%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.35) 55%, transparent 85%);
+  mask-image: radial-gradient(ellipse at 60% 40%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.35) 55%, transparent 85%);
+}

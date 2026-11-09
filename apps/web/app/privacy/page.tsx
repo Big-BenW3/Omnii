@@ -4,9 +4,9 @@ import { ShieldCheck, EyeOff, ReceiptText } from "lucide-react";
 import { Page } from "../lib/client/ui";
 
 export const metadata: Metadata = {
-  title: "Privacy model: Concord",
+  title: "Privacy model: Omnii",
   description:
-    "How Concord designs for meeting and ballot privacy while keeping outcomes verifiable.",
+    "How Omnii designs for meeting and ballot privacy while keeping outcomes verifiable.",
 };
 
 const CARDS = [
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
     <Page title="Privacy model">
       <main>
         <p className="text-sm text-text-secondary">
-          Concord never promises what it cannot prove. The existence of an on-chain transaction and the creator wallet can be publicly observable. Video and audio use encrypted transport but are not end-to-end encrypted. What stays private: the discussion, the invite secret, and every individual ballot.
+          Omnii never promises what it cannot prove. The existence of an on-chain transaction and the creator wallet can be publicly observable. Video and audio use encrypted transport but are not end-to-end encrypted. What stays private: the discussion, the invite secret, and every individual ballot.
         </p>
 
         <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-warning/40 bg-warning/10 p-4 md:p-5">
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
           <p className="mt-1 text-sm leading-relaxed text-text-secondary">
             The ballot isolation, tally and no-premature-result tests pass on
             the MagicBlock Devnet private rollup (see
-            docs/architecture/magicblock-proof.md). Concord runs on Devnet only
+            docs/architecture/magicblock-proof.md). Omnii runs on Devnet only
             and has not been audited, so treat ballot privacy as experimental.
           </p>
         </div>

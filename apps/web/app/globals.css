@@ -3,26 +3,30 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Concord palette: minimalist black and blue. Single dark theme. */
-  --background: #07090d;
-  --foreground: #f5f7fb;
-  --surface: #10141c;
-  --surface-raised: #171d28;
-  --border: #252d3a;
-  --border-low: #1a212c;
-  --text-primary: #f5f7fb;
-  --text-secondary: #9aa6b7;
-  --accent: #4d8dff;
-  --accent-hover: #75a6ff;
-  --accent-foreground: #ffffff;
+  /* Omnii palette: near-black foundation, single dark theme, restrained violet accent. */
+  --background: #07080b;
+  --background-alt: #0c0d12;
+  --surface: #0c0d12;
+  --surface-raised: #12141b;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-low: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #f5f5f7;
+  --text-secondary: #9699a5;
+  --text-muted: #686b76;
+  --foreground: var(--text-primary);
+  --accent: #9b91ff;
+  --accent-hover: #c1b9ff;
+  --accent-soft: rgba(155, 145, 255, 0.14);
+  --accent-foreground: #0a0a0c;
   --success: #40c995;
   --warning: #f3b552;
   --danger: #f16c78;
   --danger-foreground: #ffffff;
-  --ring: #4d8dff;
-  --radius: 0.75rem;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --ring: var(--accent);
+  --radius: 0.875rem;
+  --font-sans: "Inter", "SF Pro Display", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "SF Mono", "Berkeley Mono", ui-monospace, "Cascadia Code", monospace;
 
   /* Aliases kept for template components that are still in use */
   --primary: var(--accent);
@@ -31,7 +35,7 @@
   --muted-foreground: var(--text-secondary);
   --card: var(--surface);
   --card-foreground: var(--text-primary);
-  --popover: var(--surface);
+  --popover: var(--surface-raised);
   --popover-foreground: var(--text-primary);
   --input: var(--border);
   --cream: var(--surface-raised);
@@ -42,30 +46,32 @@
 }
 
 .dark {
-  /* Same tokens: Concord ships one dark theme. */
-  --background: #07090d;
-  --foreground: #f5f7fb;
-  --surface: #10141c;
-  --surface-raised: #171d28;
-  --border: #252d3a;
-  --border-low: #1a212c;
-  --text-primary: #f5f7fb;
-  --text-secondary: #9aa6b7;
-  --accent: #4d8dff;
-  --accent-hover: #75a6ff;
+  /* Same tokens: Omnii ships one dark theme. */
+  --background: #07080b;
+  --surface: #0c0d12;
+  --surface-raised: #12141b;
+  --border: rgba(255, 255, 255, 0.1);
+  --text-primary: #f5f5f7;
+  --text-secondary: #9699a5;
+  --accent: #9b91ff;
+  --accent-hover: #c1b9ff;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
   --color-border: var(--border);
   --color-border-low: var(--border-low);
+  --color-border-strong: var(--border-strong);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
   --color-accent-foreground: var(--accent-foreground);
   --color-success: var(--success);
   --color-warning: var(--warning);
@@ -87,14 +93,19 @@
   --color-ring: var(--ring);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-md: calc(var(--radius) - 4px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-2xl: calc(var(--radius) + 16px);
 }
 
 @layer base {
   * {
     @apply border-border outline-transparent;
+  }
+
+  html {
+    background: var(--background);
   }
 
   body {
@@ -105,5 +116,37 @@
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Small uppercase monospace label, used for section identifiers and metadata. */
+  .label-mono {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  /* Glass surface used by the floating navbar and elevated panels. */
+  .glass {
+    background: rgba(12, 13, 18, 0.72);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid var(--border);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

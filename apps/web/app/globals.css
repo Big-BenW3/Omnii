@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* Concord palette: minimalist black and blue. Single dark theme. */
+  --background: #07090d;
+  --foreground: #f5f7fb;
+  --surface: #10141c;
+  --surface-raised: #171d28;
+  --border: #252d3a;
+  --border-low: #1a212c;
+  --text-primary: #f5f7fb;
+  --text-secondary: #9aa6b7;
+  --accent: #4d8dff;
+  --accent-hover: #75a6ff;
+  --accent-foreground: #ffffff;
+  --success: #40c995;
+  --warning: #f3b552;
+  --danger: #f16c78;
+  --danger-foreground: #ffffff;
+  --ring: #4d8dff;
+  --radius: 0.75rem;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Aliases kept for template components that are still in use */
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-foreground);
+  --muted: var(--text-secondary);
+  --muted-foreground: var(--text-secondary);
+  --card: var(--surface);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface);
+  --popover-foreground: var(--text-primary);
+  --input: var(--border);
+  --cream: var(--surface-raised);
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--text-primary);
+  --destructive: var(--danger);
+  --destructive-foreground: var(--danger-foreground);
+}
+
+.dark {
+  /* Same tokens: Concord ships one dark theme. */
+  --background: #07090d;
+  --foreground: #f5f7fb;
+  --surface: #10141c;
+  --surface-raised: #171d28;
+  --border: #252d3a;
+  --border-low: #1a212c;
+  --text-primary: #f5f7fb;
+  --text-secondary: #9aa6b7;
+  --accent: #4d8dff;
+  --accent-hover: #75a6ff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-low: var(--border-low);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-input: var(--input);
+  --color-cream: var(--cream);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
